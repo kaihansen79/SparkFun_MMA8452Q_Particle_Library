@@ -18,8 +18,8 @@ See the LICENSE file included with this library for more information.
 Distributed as-is; no warranty is given.
 ******************************************************************************/
 
-#ifndef SparkFunMMA8452Q_h
-#define SparkFunMMA8452Q_h
+#ifndef KaiMMA8452Q_h
+#define KaiMMA8452Q_h
 
 #include "application.h"
 
