@@ -93,30 +93,29 @@ class MMA8452Q
 {
 public:	
     MMA8452Q(byte addr = MMA8452Q_ADD_SA0_1); // Constructor, default to SA0 being high
-	
+	void standby();
+	byte readRegister(MMA8452Q_Register reg);
 	byte begin(MMA8452Q_Scale fsr = SCALE_2G, MMA8452Q_ODR odr = ODR_800);
-    void read();
+        void read();
 	byte available();
 	byte readTap();
 	byte readPL();
 	
 	void setupTap(byte xThs, byte yThs, byte zThs, byte timeLimit = 0xFF, byte latency = 0xFF, byte window = 0xFF);
 	
-    short x, y, z;
+        short x, y, z;
 	float cx, cy, cz;
 private:
 	byte address;
 	MMA8452Q_Scale scale;
 	
-	void standby();
 	void active();
 	void setupPL();
 	void setScale(MMA8452Q_Scale fsr);
 	void setODR(MMA8452Q_ODR odr);
 	void writeRegister(MMA8452Q_Register reg, byte data);
-    void writeRegisters(MMA8452Q_Register reg, byte *buffer, byte len);
-	byte readRegister(MMA8452Q_Register reg);
-    byte readRegisters(MMA8452Q_Register reg, byte *buffer, byte len);
+        void writeRegisters(MMA8452Q_Register reg, byte *buffer, byte len);
+        byte readRegisters(MMA8452Q_Register reg, byte *buffer, byte len);
 };
 
 #endif
