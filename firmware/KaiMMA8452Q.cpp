@@ -150,7 +150,7 @@ void MMA8452Q::setupTap(byte xThs, byte yThs, byte zThs, byte timeLimit, byte la
 // 		writeRegister(PULSE_THSZ, zThs);  // z thresh
 // 	}
 	// Set up single and/or double tap detection on each axis individually.
-	writeRegister(PULSE_CFG, 0x6A);     // temp | 0x6A);
+	writeRegister(PULSE_CFG, 0x6A);     // enable DPE only for x,y, and z
 	// writeRegister(PULSE_CFG, temp | 0x40);
 	// Set the time limit - the maximum time that a tap can be above the thresh
 	//writeRegister(PULSE_TMLT, 0x30);  // 30ms time limit at 800Hz odr
