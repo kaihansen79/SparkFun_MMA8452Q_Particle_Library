@@ -2,6 +2,6 @@
 	"name": "KaiMMA8452Q",
 	"author": "Kai",
 	"license": "MIT",
-	"version": "1.0.7",
+	"version": "1.0.8",
 	"description": "A Particle library for the SparkFun MMA8452Q 3-axis I2C accelerometer."
 }
