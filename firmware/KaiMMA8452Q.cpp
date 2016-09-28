@@ -174,7 +174,7 @@ byte MMA8452Q::readTap()
 	byte tapStat = readRegister(PULSE_SRC);
 	if (tapStat & 0x80) // Read EA bit to check if a interrupt was generated
 	{
-		return tapStat & 0x7F;
+		return tapStat;     // & 0x7F;
 	}
 	else
 		return 0;
