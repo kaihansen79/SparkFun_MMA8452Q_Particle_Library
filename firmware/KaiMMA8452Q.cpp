@@ -244,7 +244,7 @@ void MMA8452Q::writeRegisters(MMA8452Q_Register reg, byte *buffer, byte len)
 
 // READ A SINGLE REGISTER
 //	Read a byte from the MMA8452Q register "reg".
-byte MMA8452Q::readRegister(byte reg1);     // MMA8452Q_Register reg)
+byte MMA8452Q::readRegister(MMA8452Q_Register reg)
 {
 	Wire.beginTransmission(address);
 	Wire.write(reg);
