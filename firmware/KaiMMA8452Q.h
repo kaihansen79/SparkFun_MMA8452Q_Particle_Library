@@ -102,7 +102,7 @@ public:
 	byte readTap();
 	byte readPL();
 	
-	void setupTap(byte xThs, byte yThs, byte zThs, byte timeLimit = 0xFF, byte latency = 0xFF, byte window = 0xFF);
+	void setupTap(byte xThs, byte yThs, byte zThs, byte timeLimit, byte latency, byte window);      // = 0xFF, byte latency = 0xFF, byte window = 0xFF);
 	
         short x, y, z;
 	float cx, cy, cz;
