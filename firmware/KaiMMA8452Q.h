@@ -95,6 +95,7 @@ public:
     MMA8452Q(byte addr = MMA8452Q_ADD_SA0_1); // Constructor, default to SA0 being high
 	void standby();
 	byte readRegister(MMA8452Q_Register reg);
+        byte readRegisters(MMA8452Q_Register reg, byte *buffer, byte len);
 	byte begin(MMA8452Q_Scale fsr = SCALE_2G, MMA8452Q_ODR odr = ODR_800);
         void read();
 	byte available();
@@ -115,7 +116,6 @@ private:
 	void setODR(MMA8452Q_ODR odr);
 	void writeRegister(MMA8452Q_Register reg, byte data);
         void writeRegisters(MMA8452Q_Register reg, byte *buffer, byte len);
-        byte readRegisters(MMA8452Q_Register reg, byte *buffer, byte len);
 };
 
 #endif
