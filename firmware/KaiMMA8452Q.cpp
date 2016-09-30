@@ -135,19 +135,19 @@ void MMA8452Q::setupTap(byte xThs, byte yThs, byte zThs, byte timeLimit, byte la
 // 	{
 // 		temp |= 0x3; // Enable taps on x
 // 		// temp |= 0x1; // Enable single-tap on x
-// 		writeRegister(PULSE_THSX, xThs);  // x thresh
+ 	writeRegister(PULSE_THSX, xThs);  // x thresh
 // 	}
 // 	if (!(yThs & 0x80))
 // 	{
 // 		temp |= 0xC; // Enable taps on y
 // 		// temp |= 0x4; // Enable single-tap on y
-// 		writeRegister(PULSE_THSY, yThs);  // y thresh
+ 	writeRegister(PULSE_THSY, yThs);  // y thresh
 // 	}
 // 	if (!(zThs & 0x80))
 // 	{
 // 	    temp |= 0x30; // Enable taps on z
 // 	    // temp |= 0x10; // Enable single-tap on z
-// 		writeRegister(PULSE_THSZ, zThs);  // z thresh
+ 	writeRegister(PULSE_THSZ, zThs);  // z thresh
 // 	}
 	// Set up single and/or double tap detection on each axis individually.
 	writeRegister(PULSE_CFG, 0x6A);     // enable DPE only for x,y, and z
