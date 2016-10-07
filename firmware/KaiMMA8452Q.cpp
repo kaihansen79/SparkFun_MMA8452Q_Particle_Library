@@ -184,7 +184,7 @@ byte MMA8452Q::readTap()
 //	This function sets up portrait and landscape detection.
 void MMA8452Q::setupPL()
 {
-	standby();
+	// standby();
 	
 	// For more info check out this app note:
 	//	http://cache.freescale.com/files/sensors/doc/app_note/AN4068.pdf
