@@ -101,7 +101,7 @@ public:
 	byte available();
 	byte readTap();
 	byte readPL();
-	
+	void setupPL();
 	void setupTap(byte xThs, byte yThs, byte zThs, byte timeLimit, byte latency, byte window);      // = 0xFF, byte latency = 0xFF, byte window = 0xFF);
 	
         short x, y, z;
@@ -111,7 +111,6 @@ private:
 	MMA8452Q_Scale scale;
 	
 	void active();
-	void setupPL();
 	void setScale(MMA8452Q_Scale fsr);
 	void setODR(MMA8452Q_ODR odr);
 	void writeRegister(MMA8452Q_Register reg, byte data);
