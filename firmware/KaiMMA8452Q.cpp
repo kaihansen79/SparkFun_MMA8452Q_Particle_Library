@@ -12,7 +12,7 @@ hardware I2C reads and writes.
 Development environment specifics:
 	IDE: Particle Build
 	Hardware Platform: Particle Photon
-	
+
 This code is open source, released under the MIT license.
 See the LICENSE file included with this library for more information.
 
@@ -40,26 +40,26 @@ MMA8452Q::MMA8452Q(byte addr)
 byte MMA8452Q::begin(MMA8452Q_Scale fsr, MMA8452Q_ODR odr)
 {
 	scale = fsr; // Haul fsr into our class variable, scale
-	
+
 	Wire.begin(); // Initialize I2C
-	
+
 	byte c = readRegister(WHO_AM_I);  // Read WHO_AM_I register
-	
+
 	if (c != 0x2A) // WHO_AM_I should always be 0x2A
 	{
 		return 0;
 	}
-	
+
 	standby();  // Must be in standby to change registers
-	
+
 	setScale(scale);  // Set up accelerometer scale
 	setODR(odr);  // Set up output data rate
 	setupPL();  // Set up portrait/landscape detection
 	// Multiply parameter by 0.0625g to calculate threshold.
 	//setupTap(0x02, 0x02, 0x02); // Disable x, y, set z to 0.5g
-	
+
 	active();  // Set to active to start reading
-	
+
 	return 1;
 }
 
@@ -75,7 +75,7 @@ void MMA8452Q::read()
 	byte rawData[6];  // x/y/z accel register data stored here
 
 	readRegisters(OUT_X_MSB, rawData, 6);  // Read the six raw data registers into data array
-	
+
 	x = ((short)(rawData[0]<<8 | rawData[1])) >> 4;
 	y = ((short)(rawData[2]<<8 | rawData[3])) >> 4;
 	z = ((short)(rawData[4]<<8 | rawData[5])) >> 4;
@@ -106,7 +106,7 @@ void MMA8452Q::setScale(MMA8452Q_Scale fsr)
 
 // SET THE OUTPUT DATA RATE
 //	This function sets the output data rate of the MMA8452Q.
-//	Possible values for the odr parameter are: ODR_800, ODR_400, ODR_200, 
+//	Possible values for the odr parameter are: ODR_800, ODR_400, ODR_200,
 //	ODR_100, ODR_50, ODR_12, ODR_6, or ODR_1
 void MMA8452Q::setODR(MMA8452Q_ODR odr)
 {
@@ -126,7 +126,9 @@ void MMA8452Q::setODR(MMA8452Q_ODR odr)
 //			on that axis.
 void MMA8452Q::setupTap(byte xThs, byte yThs, byte zThs, byte timeLimit, byte latency, byte window)
 {
-        standby();
+	standby();
+
+	writeRegister(PULSE_CFG, 0x55);
 	// Set up single, for more info check out this app note:
 	// http://cache.freescale.com/files/sensors/doc/app_note/AN4072.pdf
 	// Set the threshold - minimum required acceleration to cause a tap.
@@ -150,7 +152,7 @@ void MMA8452Q::setupTap(byte xThs, byte yThs, byte zThs, byte timeLimit, byte la
  	writeRegister(PULSE_THSZ, zThs);  // z thresh
 // 	}
 	// Set up single and/or double tap detection on each axis individually.
-	writeRegister(PULSE_CFG, 0x6A);     // enable DPE only for x,y, and z
+	//writeRegister(PULSE_CFG, 0xD5);		//6A);     // enable DPE only for x,y, and z
 	// writeRegister(PULSE_CFG, temp | 0x40);
 	// Set the time limit - the maximum time that a tap can be above the thresh
 	//writeRegister(PULSE_TMLT, 0x30);  // 30ms time limit at 800Hz odr
@@ -161,12 +163,12 @@ void MMA8452Q::setupTap(byte xThs, byte yThs, byte zThs, byte timeLimit, byte la
 	// Set the second pulse window - maximum allowed time between end of
 	//	latency and start of second pulse
 	writeRegister(PULSE_WIND, window);  // 5. 318ms (max value) between taps max
-	
+
 	active();
 }
 
 // READ TAP STATUS
-//	This function returns any taps read by the MMA8452Q. If the function 
+//	This function returns any taps read by the MMA8452Q. If the function
 //	returns no new taps were detected. Otherwise the function will return the
 //	lower 7 bits of the PULSE_SRC register.
 byte MMA8452Q::readTap()
@@ -185,10 +187,10 @@ byte MMA8452Q::readTap()
 void MMA8452Q::setupPL()
 {
 	// standby();
-	
+
 	// For more info check out this app note:
 	//	http://cache.freescale.com/files/sensors/doc/app_note/AN4068.pdf
-	
+
 	// 1. Enable P/L
 	writeRegister(PL_CFG, readRegister(PL_CFG) | 0x40); // Set PL_EN (enable)
 	// 2. Set the debounce rate
@@ -202,7 +204,7 @@ void MMA8452Q::setupPL()
 byte MMA8452Q::readPL()
 {
 	byte plStat = readRegister(PL_STATUS);
-	
+
 	if (plStat & 0x40) // Z-tilt lockout
 		return LOCKOUT;
 	else // Otherwise return LAPO status
@@ -213,8 +215,9 @@ byte MMA8452Q::readPL()
 //	Sets the MMA8452 to standby mode. It must be in standby to change most register settings
 void MMA8452Q::standby()
 {
-	byte c = readRegister(CTRL_REG1);
-	writeRegister(CTRL_REG1, c & ~(0x01)); //Clear the active bit to go into standby
+	//byte c = readRegister(CTRL_REG1);
+	//writeRegister(CTRL_REG1, c & ~(0x01)); //Clear the active bit to go into standby
+	writeRegister(CTRL_REG1, 0x08); //Clear the active bit to go into standby
 }
 
 // SET ACTIVE MODE
@@ -257,7 +260,7 @@ byte MMA8452Q::readRegister(MMA8452Q_Register reg)
     	if (Wire.requestFrom(address, 1) == 1)
     	    return Wire.read();
 	}
-	
+
     return 0;
 }
 
