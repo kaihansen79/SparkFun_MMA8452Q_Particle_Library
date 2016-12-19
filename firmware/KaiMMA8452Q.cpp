@@ -128,7 +128,7 @@ void MMA8452Q::setupTap(byte xThs, byte yThs, byte zThs, byte timeLimit, byte la
 {
 	standby();
 
-	writeRegister(PULSE_CFG, 0x55);
+	writeRegister(PULSE_CFG, 0x15);
 	// Set up single, for more info check out this app note:
 	// http://cache.freescale.com/files/sensors/doc/app_note/AN4072.pdf
 	// Set the threshold - minimum required acceleration to cause a tap.
